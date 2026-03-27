@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psic. Andrea Sánchez</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">Psic. Andrea Sánchez</div>
+
+    <nav class="nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#sobre-mi">Sobre nosotros</a>
+      <a href="#contacto">Contactos</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1>Sentirte agotado(a) no es debilidad, es una señal de que necesitas apoyo.</h1>
+      <p>
+        Te acompañamos con atención psicológica online para ayudarte a recuperar tu bienestar emocional.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#contacto" class="btn btn-primary">Agendar cita</a>
+        <a href="#servicios" class="btn btn-secondary">Ver servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="services-section" id="servicios">
+    <div class="section-title">
+      <h2>Apoyo psicológico para lo que estás sintiendo</h2>
+      <p>Acompañamiento especializado, pensado para tu realidad.</p>
+    </div>
+
+    <div class="cards-container">
+      <div class="service-card">
+        <h3>Ansiedad y estrés</h3>
+        <p>
+          Aprende a gestionar tus pensamientos y emociones para vivir con mayor tranquilidad.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <h3>Depresión y desmotivación</h3>
+        <p>
+          Apoyo para que vuelvas a encontrar sentido, motivación y bienestar en tu vida.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <h3>Otras dificultades</h3>
+        <p>
+          Pánico, TDAH, duelo, autoestima y otras áreas de desarrollo personal.
+        </p>
+      </div>
+    </div>
+
+    <div class="services-cta">
+      <p>
+        No tienes que saber exactamente qué te pasa. Habla con nosotros y te ayudamos a entenderlo.
+      </p>
+      <a href="#contacto" class="btn btn-primary small-btn">Habla con nosotros</a>
+    </div>
+  </section>
+
+  <!-- SOBRE MI -->
+  <section class="about-section" id="sobre-mi">
+    <div class="about-container">
+      <div class="about-image">
+        <!-- Aquí luego puedes poner una foto -->
+        <div class="image-placeholder"></div>
+      </div>
+
+      <div class="about-text">
+        <span class="about-tag">Sobre mí</span>
+        <h2>Sobre mí</h2>
+        <p>
+          Hola, soy Andrea Sánchez, psicóloga especializada en el acompañamiento emocional de personas que atraviesan ansiedad, estrés, desmotivación y otros procesos personales.
+        </p>
+        <p>
+          Mi objetivo es ofrecerte un espacio seguro, humano y profesional donde puedas expresarte con confianza y empezar tu proceso de bienestar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contact-section" id="contacto">
+    <div class="contact-container">
+      <h2>Contacta para una consulta online</h2>
+      <p class="contact-description">
+        Para resolver cualquier duda sobre nuestros servicios de psicología online o agendar tu consulta, déjanos un mensaje.
+      </p>
+
+      <div class="contact-info">
+        <div>
+          <strong>Email:</strong><br>
+          tuemail@gmail.com
+        </div>
+        <div>
+          <strong>Número:</strong><br>
+          999 999 999
+        </div>
+      </div>
+
+<div class="notification" id="successNotification">
+  <div class="notification-content">
+    <span class="notification-icon">✓</span>
+    <div>
+      <h3>¡Mensaje enviado!</h3>
+      <p>Recibirás una respuesta pronto. Gracias por contactarnos.</p>
+    </div>
+  </div>
+  <button class="notification-close" onclick="closeNotification()">×</button>
+</div>
+
+<form action="https://formspree.io/f/mbdplywz" method="POST" class="contact-form" id="contactForm">
+  <div class="form-row">
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="email" name="email" placeholder="Email" required>
+  </div>
+
+  <input type="text" name="asunto" placeholder="Asunto" required>
+  <textarea name="mensaje" placeholder="Descripción" rows="6" required></textarea>
+
+  <button type="submit" class="btn btn-primary form-btn">Enviar mensaje</button>
+</form>
+
+<script>
+  const contactForm = document.getElementById('contactForm');
+  const successNotification = document.getElementById('successNotification');
+  let notificationTimeout;
+
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(contactForm);
+    
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        // Mostrar notificación
+        successNotification.classList.add('show');
+        contactForm.reset();
+        
+        // Limpiar timeout anterior si existe
+        clearTimeout(notificationTimeout);
+        
+        // Auto-cerrar después de 5 segundos
+        notificationTimeout = setTimeout(function() {
+          successNotification.classList.remove('show');
+        }, 5000);
+      }
+    } catch (error) {
+      console.error('Error al enviar:', error);
+    }
+  });
+
+  function closeNotification() {
+    successNotification.classList.remove('show');
+    clearTimeout(notificationTimeout);
+  }
+</script>
+    </div>
+  </section>
+
+</body>
+</html>
